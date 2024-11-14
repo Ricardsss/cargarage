@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "garage.apps.GarageConfig",
 ]
 
 MIDDLEWARE = [
@@ -132,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Toronto"
 
 USE_I18N = True
 
@@ -144,6 +145,15 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "static/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
