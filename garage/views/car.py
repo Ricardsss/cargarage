@@ -1,7 +1,10 @@
 from django.http import JsonResponse
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from django.contrib.auth.decorators import login_required
+
+# from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+
 
 from ..models import Car, Make, CarModel
 from ..utils.validators import (
@@ -11,6 +14,7 @@ from ..utils.validators import (
 import json
 
 
+@csrf_exempt
 def get_all_cars(request):
     try:
         cars = Car.objects.all()
@@ -36,6 +40,7 @@ def get_all_cars(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 
+@csrf_exempt
 def get_car_by_id(request, car_id):
     try:
         car = Car.objects.get(id=car_id)
@@ -57,6 +62,7 @@ def get_car_by_id(request, car_id):
         return JsonResponse({"error": "Car not found"}, status=404)
 
 
+@csrf_exempt
 def create_car(request):
     try:
         data = json.loads(request.body)
@@ -127,6 +133,7 @@ def create_car(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 
+@csrf_exempt
 def update_car(request, car_id):
     try:
         try:
@@ -170,6 +177,7 @@ def update_car(request, car_id):
         return JsonResponse({"error": "Invalid JSON data"}, status=400)
 
 
+@csrf_exempt
 def delete_car(request, car_id):
     if request.method == "DELETE":
         try:
@@ -197,7 +205,8 @@ def delete_car(request, car_id):
 
 class CarView:
 
-    @login_required
+    # @login_required
+    @csrf_exempt
     def cars(request):
         if request.method == "GET":
             return get_all_cars(request)
@@ -208,7 +217,8 @@ class CarView:
                 {"error": "Only GET or POST method allowed"}, status=405
             )
 
-    @login_required
+    # @login_required
+    @csrf_exempt
     def car(request, car_id):
         if request.method == "GET":
             return get_car_by_id(request, car_id)
@@ -221,7 +231,8 @@ class CarView:
                 {"error": "Only GET, PATCH or DELETE method allowed"}, status=405
             )
 
-    @login_required
+    # @login_required
+    @csrf_exempt
     def get_cars_by_make(request, make_id):
         if request.method == "GET":
             try:
@@ -250,7 +261,8 @@ class CarView:
 
         return JsonResponse({"error": "Only GET method allowed"}, status=405)
 
-    @login_required
+    # @login_required
+    @csrf_exempt
     def get_cars_by_model(request, model_id):
         if request.method == "GET":
             try:

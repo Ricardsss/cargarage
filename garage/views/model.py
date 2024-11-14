@@ -1,9 +1,11 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 from ..models import CarModel
 
 
+@csrf_exempt
 def get_all_car_models(request):
     car_models = CarModel.objects.select_related("make").all()
 
@@ -17,6 +19,7 @@ def get_all_car_models(request):
 
 class ModelView:
 
+    @csrf_exempt
     def car_models(request):
         if request.method == "GET":
             return get_all_car_models(request)

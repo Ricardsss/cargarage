@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+
+# from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 import json
 import re
@@ -102,7 +103,8 @@ class AuthView:
         else:
             return JsonResponse({"error": "Only POST method allowed"}, status=405)
 
-    @login_required
+    # @login_required
+    @csrf_exempt
     def custom_logout(request):
         if request.method == "DELETE":
             logout(request)
