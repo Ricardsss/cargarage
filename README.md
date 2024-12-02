@@ -297,7 +297,3 @@ No body required.
    ```bash
    python manage.py runserver
    ```
-
-## Online Access
-
-This API is also accessible at https://cargarage-aaaefeb42317.herokuapp.com. In order to reduce costs, it is currently offline. If you would like access to test it out, please contact me via my email address on my resume, and I will turn off maintenance mode.
